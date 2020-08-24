@@ -1,0 +1,164 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a, a:hover {
+	text-decoration: none;
+	color: none;
+}
+.name {
+	box-shadow: 20px 20px 50px #1a202c,
+		-30px -30px 60px #f27f80;
+	font-family: 'Acme', sans-serif;
+}
+
+
+.share img {
+  animation: mymove 2s infinite;
+}
+@keyframes mymove {
+  0%   {opacity: 1;}
+  50%  {opacity: 0.7;}
+  100% {opacity: 1;}
+}
+
+.sStyle > div {
+	box-shadow:
+		12px 12px 16px 0 rgba(0, 0, 0, 0.25),
+		-8px -8px 12px 0 rgba(255, 255, 255, 0.3);
+}
+
+/*.sStyle > div:hover {
+	background: linear-gradient(135deg, rgba(0, 0, 0, 0.22), rgba(255, 255, 255, 0.25));
+}*/
+
+.table {
+	box-shadow:
+		-8px -8px 12px 0 rgba(255, 255, 255, 0.3);
+}
+button{
+	font-weight: bold;
+}
+.resSmall th {
+	cursor: pointer;
+}
+.resSmall th:hover {
+	background: #B3B6B7;
+}
+.sortCss th:nth-child(2), .sortCss th:nth-child(3), .sortCss th:nth-child(4) {
+	cursor: pointer;
+}
+.sortCss th:hover:nth-child(2), .sortCss th:hover:nth-child(3), .sortCss th:hover:nth-child(4) {
+	background: #B3B6B7;
+}
+
+.pptrState {
+	cursor: pointer;
+}
+
+.arrowRight {
+    position:relative
+}
+.arrowRight::before {
+	content:"";
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 5px;
+	-ms-transform: translateY(-50%);
+  	transform: translateY(-50%);
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-left: 10px solid #B3B6B7;
+}
+
+
+
+.heades span{
+  overflow:hidden;
+}
+.heades span:after{
+  content:'';
+  display:inline-block;
+  width:30%; height:100%;
+  /*margin-right:-100%;*/
+  border-bottom: 5px solid white;
+}
+
+
+
+.sStyle > div {
+	padding: 18px 48px 18px 48px;
+}
+@media only screen and (min-width: 520px){
+	.indiaStyle > div {
+		display: flex;
+		justify-content: center;
+	}
+}
+@media only screen and (min-width: 1224px){
+	.indiaStyle {
+		display: flex;
+		justify-content: center;
+	}
+}
+@media only screen and (max-width: 1024px){
+	.sStyle > div {
+		padding: 24px;
+	}
+	.arrowRight::before {
+		left: 5px;
+	}
+}
+@media only screen and (max-width: 405px) {
+	.arrowRight::before {
+		border-top: 5px solid transparent;
+		border-bottom: 5px solid transparent;
+		border-left: 5px solid #B3B6B7;
+	}
+	.resSmall, .resSmallNews {
+		font-size: 10px;
+	}
+}
+@media only screen and (max-width: 720px){
+	.disMd {
+		display: none;
+	}
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  /*width: 300px;*/
+  /*border: 3px solid #73AD21;*/
+}
+
+
+
+
+.noti button {
+  border: 0px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: none;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.noti button:hover {
+  background-color: #2980b9;
+  cursor: pointer;
+  color: #fff;
+}
+
+
+.modal-body {
+    max-height: calc(100vh - 212px);
+    overflow-y: auto;
+}

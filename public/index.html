@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="./favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Covid-19 Tracker</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Acme&family=Carter+One&display=swap" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css?<?php echo date('l jS \of F Y h:i:s A'); ?>">
+	<script src="main.js?<?php echo date('l jS \of F Y h:i:s A'); ?>"></script>
+	<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+	<link rel="manifest" href="manifest.json">
+	<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase.js"></script>
+</head>
+
+<body>
+	<div class="bg-blue-700">
+		<nav class="container sm:flex justify-between py-2 items-center">
+			<a href="https://www.meabhishek.com">
+				<div class="">
+					<div class="flex items-center px-6 rounded-full name bg-white">
+						<img class="" src="https://img.icons8.com/nolan/64/coronavirus.png" />
+						<div class="font-extrabold text-blue-800 pl-2 text-xl sm:text-2xl"><h1>Covid-19 Tracker</h1></div>
+					</div>
+				</div>
+			</a>
+			<ul class="text-xs sm:text-lg font-bold text-gray-200 items-center">
+				<div class="flex justify-around">
+					<li class="m-2 py-1 px-4 bg-blue-600 hover:bg-blue-500 rounded-full"><a href="#about" class="hover:text-white">About</a></li>
+					<li class="m-2 py-1 px-4 bg-blue-600 hover:bg-blue-500 rounded-full"><a href="#precautions" class="hover:text-white">Precautions</a></li>
+					<li class="m-2 py-1 px-4 bg-blue-600 hover:bg-blue-500 rounded-full"><a href="#footer" class="hover:text-white">Contact</a></li>
+				</div>
+				<div class="flex justify-around items-center">
+					
+					<li class="share m-2 rounded-full inline-flex bg-blue-800 rounded-full">
+						<div class="flex px-2 items-center bg-blue-600 rounded-full">Share To</div>
+						<a href="https://www.linkedin.com/sharing/share-offsite/?url={https://www.meabhishek.com}" target="_blank" class="hover:text-white"><img src="https://img.icons8.com/color/48/000000/linkedin-circled.png" height="36px" width="36px"/></a>
+						<a href="fb-messenger://share/?link=https://www.meabhishek.com" target="_blank" class="hover:text-white"><img src="https://img.icons8.com/color/48/000000/facebook-messenger.png" height="36px" width="36px"/></a>
+						<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.meabhishek.com" target="_blank" class="hover:text-white"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" height="36px" width="36px"/><a>
+						<a href="whatsapp://send?text=https://www.meabhishek.com" target="_blank" class="hover:text-white"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" height="36px" width="36px"/></a>
+					</li>
+				</div>
+			</ul>
+		</nav>
+	</div>
+
+	<div class="md:p-6 md:pb-6 disMd">
+		<div class="bg-gray-100 mb-6 shadow-2xl px-2 md:px-4">
+			<div class="py-2 md:py-6">
+				<div class="text-left text-xs sm:text-sm rounded-lg p-2 md:px-16 md:py-6 shadow-2xl">
+					These days we all are fighting against disease called covid19 a global pandemic caused by novel coronavirus named SARS-CoV-2 formerly called 2019-nCoV.<br/>
+					Till now we don't khow when and how the virus came but the outbreak came to light on December 31, 2019 when China informed the World Health Organisation (WHO) of a cluster of respiratory illness similar as Swine Flu (H1N1) in Wuhan City in Hubei Province. But till then disease spread to more Provinces in China and the rest of the world. On 30 January 2020 the WHO declared the COVID-19 outbreak a global health emergency and on 11 March 11 2020 it declared COVID-19 a global pandemic.<br/>
+					Because till now there is no any proper treatment against the disease, we will overcome the COVID-19 pandemic only through effective collaboration, communication and prevention. So, this is a plateform from where you can view realtime state and district wise covid-19 cases and it's zones bases of outbreaks in India. And the worldwide data of corona cases are also abilable.<br/>
+					<span>StayHomeStaySafe</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid bg-blue-200 p-6 pb-6">
+		<div class="bg-white border-l-8 border-blue-800 mb-6 shadow-2xl">
+			<div class="">
+				<div class="pl-6 py-6">
+					<div class="bg-blue-500 text-left text-2xl font-extrabold text-white rounded-bl-full px-16 py-2 shadow-2xl"><h2>Global</h2><span></span></div>
+				</div>
+				<div class="flex justify-end px-2 pb-4 text-blue-600 font-bold text-xs sm:text-sm">
+					<div class="">Last Updated Time: </div>
+					<div class="" id="gUpdatedTime"></div>
+					<div class=""> Hours Ago</div>
+				</div>
+				<div class="pb-6">
+					<div class="indiaStyle text-center font-bold text-white items-center sm:text-sm" id="idGlobalData"></div>
+				</div>
+			</div>
+			<div class="px-6 sm:py-6 pb-2 flex-row justify-center sm:flex">
+				<button onclick="sContBycCases()" data-toggle="modal" data-target="#countryModalCenter" class="lg:px-4 py-1">
+					<div class="text-white text-center font-bold rounded-full py-2 shadow-2xl px-4 sm:px-16 text-sm sm:text-lg transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600 transform hover:-translate-y-1 hover:scale-110"> View Country Wise Data </div>
+				</button>
+				<button onclick="dailyGlobal()" data-toggle="modal" data-target="#dailyGData" class="lg:px-4 py-1">
+					<div class="text-white text-center font-bold rounded-full py-2 shadow-2xl px-4 sm:px-16 text-sm sm:text-lg transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600 transform hover:-translate-y-1 hover:scale-110"> Global Daywise Cases </div>
+				</button>
+			</div>
+			<div class="">
+				<div class="pl-6 py-6">
+					<div class="bg-blue-500 text-left text-2xl font-extrabold text-white rounded-bl-full px-16 py-2 shadow-2xl"><h2>India</h2> <span></span></div>
+				</div>
+				<div class="flex justify-end px-2 pb-4 text-blue-600 font-bold text-xs sm:text-sm">
+					<div class="">Last Updated Time:</div>
+					<div class="" id="updateTime"></div>
+				</div>
+				<div class="pb-6">
+					<div class="indiaStyle text-center font-bold text-white items-center sm:text-sm" id="idIndiaData"></div>
+				</div>
+			</div>
+			<div class="px-6 sm:py-4 flex-row justify-center sm:flex">
+				<button class="lg:px-4 py-1">
+					<a href="#indData">
+						<div class="text-white text-center font-bold rounded-full py-2 shadow-2xl px-4 sm:px-16 text-sm sm:text-lg transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600 transform hover:-translate-y-1 hover:scale-110"> View Local Data </div>
+					</a>
+				</button>
+				<button onclick="dailyLocal()" data-toggle="modal" data-target="#dailyLData" class="lg:px-4 py-1">
+					<div class="text-white text-center font-bold rounded-full py-2 shadow-2xl px-4 sm:px-16 text-sm sm:text-lg transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600 transform hover:-translate-y-1 hover:scale-110"> India Daywise Cases </div>
+				</button>
+				<button onclick="dailyLocalTest()" data-toggle="modal" data-target="#dailyLDataTest" class="lg:px-4 py-1">
+					<div class="text-white text-center font-bold rounded-full py-2 shadow-2xl px-4 sm:px-16 text-sm sm:text-lg transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600 transform hover:-translate-y-1 hover:scale-110"> Daywise Total Tests </div>
+				</button>
+			</div>
+
+			<div class="pl-6 pt-4 px-6">
+				<div class="bg-red-200 text-left tex-sm sm:text-xl font-extrabold text-blue-800 px-4 sm:px-16 py-2"><h2> Recent Updates Sources</h2><span></span></div>
+			</div>
+			<div class="px-6 py-4 sm:py-4 flex-row justify-center sm:flex">
+				<button onclick="lstBJW()" data-toggle="modal" data-target="#lstNewsBrJhWb" class="lg:px-4 py-1">
+					<div class="text-white text-center font-bold rounded-full py-2 shadow-2xl px-2 sm:px-4 sm:px-16 text-sm sm:text-lg transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600 transform hover:-translate-y-1 hover:scale-110"> Bihar - Jharkhand - West Bengal </div>
+				</button>
+				<button onclick="lstOthers()" data-toggle="modal" data-target="#lstNewsOthers" class="lg:px-4 py-1">
+					<div class="text-white text-center font-bold rounded-full py-2 shadow-2xl px-4 sm:px-16 text-sm sm:text-lg transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600 transform hover:-translate-y-1 hover:scale-110"> Other States </div>
+				</button>
+			</div>
+		</div>
+	</div>
+	
+	<div class="" id="indData">
+		<div class="pt-6 text-xs sm:text-lg sm:px-6 lg:px-12">
+			<i class="fa fa-search px-2" aria-hidden="true"></i>
+			<input type="text" id="myStateInput" placeholder="Search State..." onkeyup="searchStateFun()" class="shadow border rounded-full text-gray-700 my-6 px-6 focus:shadow-outline focus:bg-blue-100 placeholder-indigo-300">
+			
+			<div class="table-responsive-lg">
+				<table class="table text-center">
+					<thead class="font-sans text-xs sm:text-lg">
+						<tr class="table-sm font-bold bg-gray-300 sortCss">
+							<th></th>
+							<th data-order="desc" id="sByTcCases" class="text-red-700" style="cursor: pointer">++Confirmed </th>
+							<th data-order="desc" id="sByTrCases" class="text-green-700" style="cursor: pointer">++Recovered </th>
+							<th data-order="desc" id="sByTDeath" class="text-gray-700" style="cursor: pointer">++Deaths </th>
+							<th></th>
+						</tr>
+						<tr class="resSmall text-gray-700 font-bold bg-gray-300">
+							<th class="" data-order="desc" id="sByAlphabet">State </th>
+							<th class="" data-order="desc" id="sBycCases">Total Confirmed </th>
+							<th class="" data-order="desc" id="sByrCases">Total Recovered </th>
+							<th class="" data-order="desc" id="sByDeath">Total Deaths </th>
+							<th class="" data-order="desc" id="sByaCases">Active Cases </th>
+						</tr>
+					</thead>
+					<thead class="text-white font-sans text-xs sm:text-lg" id="tableHead"></thead>
+					<tbody id="stateValue" class="align-middle resSmall"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	 
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-blue-300">
+					<h5 class="modal-title text-center"><p id="stateHead" class="text-2xl font-extrabold text-gray-700"></p></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pt-2 text-xs sm:text-lg sm:px-6">
+					<div class="flex flex-col sm:flex-row justify-around">
+						<div class="">
+							<i class="fa fa-search px-2" aria-hidden="true"></i>
+							<input type="text" id="myDistInput" placeholder="Search District..." onkeyup="searchDistFun()" class="shadow border rounded-full text-gray-700 my-2 px-6 focus:shadow-outline focus:bg-blue-100 placeholder-indigo-300">
+						</div>
+						
+						<div class="flex px-2 text-xs mb-2">
+							<button onclick="stateDailyTest()" data-toggle="modal" data-target="#dailyTest" class="lg:px-4 py-1">
+								<div class="text-white text-center rounded-full py-2 shadow-2xl px-4 text-xs transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600">
+									View Daywise Total Tests
+								</div>
+							</button>
+						</div>
+					</div>
+					
+			
+					<div class="table-responsive-sm">
+						<table class="table text-center">
+							<thead class="text-white font-sans text-xs sm:text-lg">
+								<tr class="table-sm font-bold bg-gray-300 sortCss">
+									<th></th>
+									<th data-order="desc" id="sDistByTcCases" class="text-red-700" style="cursor: pointer">++Confirmed </th>
+									<th data-order="desc" id="sDistByTrCases" class="text-green-700" style="cursor: pointer">++Recovered </th>
+									<th data-order="desc" id="sDistByTDeath" class="text-gray-700" style="cursor: pointer">++Deaths </th>
+									<th></th>
+								</tr>
+								<tr class="resSmall text-gray-700 font-bold bg-gray-300">
+									<th class="" data-order="desc" id="sDistByDefault">District </th>
+									<th class="" data-order="desc" id="sDistBycCases">Total Confirmed </th>
+									<th class="" data-order="desc" id="sDistByrCases">Total Recovered </th>
+									<th class="" data-order="desc" id="sDistByDeath">Total Deaths </th>
+									<th class="" data-order="desc" id="sDistByaCases">Active Cases </th>
+								</tr>
+							</thead>
+							<tbody id="dWiseValue" class="align-middle resSmall"></tbody>
+						</table>
+					</div>
+				</div>
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+	<!--Countries Data-->
+	<div class="modal fade" id="countryModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-blue-300">
+					<h5 class="modal-title"><p class="text-2xl font-extrabold text-gray-700">Global Data</p></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pt-2 text-xs sm:text-lg sm:px-6">
+					<i class="fa fa-search px-2" aria-hidden="true"></i>
+					<input type="text" id="myInput" placeholder="Search Country..." onkeyup="searchFun()" class="shadow border rounded-full text-gray-700 my-4 px-6 focus:shadow-outline focus:bg-blue-100 placeholder-indigo-300">
+			
+					<div class="table-responsive-lg">
+						<table class="table text-center">
+							<thead class="text-white font-sans text-xs sm:text-lg">
+								<tr class="table-sm font-bold bg-gray-300 sortCss">
+									<th></th>
+									<th data-order="desc" id="sContByTcCases" class="text-red-700" style="cursor: pointer">++Confirmed </th>
+									<th></th>
+									<!-- <th data-order="desc" id="sContByTrCases" class="text-green-700" style="cursor: pointer">++Recovered</th> -->
+									<th data-order="desc" id="sContByTDeath" class="text-gray-700" style="cursor: pointer">++Deaths </th>	
+									<th></th>
+									<th></th>
+									<th></th>
+								</tr>
+								<tr class="resSmall text-gray-700 font-bold bg-gray-300">
+									<th class="" data-order="desc" id="sContByDefault">Country </th>
+									<th class="" data-order="desc" id="sContBycCases">Total Confirmed </th>
+									<th class="" data-order="desc" id="sContByrCases">Total Recovered </th>
+									<th class="" data-order="desc" id="sContByDeath">Total Deaths </th>
+									<th class="" data-order="desc" id="sContByaCases">Active Cases </th>
+									<th class="" data-order="desc" id="sContByRrate">Recovery Rate </th>
+									<th class="" data-order="desc" id="sContByDrate">Death Rate </th>
+								</tr>
+							</thead>
+							<tbody id="tValue" class="align-middle resSmall"></tbody>
+						</table>
+					</div>
+				</div>
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="dailyGData" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-blue-300">
+					<h5 class="modal-title"><p class="text-2xl font-extrabold text-gray-700">Global Daily Cases</p></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pt-2 text-xs sm:text-lg sm:px-6">
+					<div class="table-responsive-lg">
+						<table class="table text-center">
+							<thead class="text-white font-sans text-xs sm:text-lg">
+								<tr class="resSmall text-gray-700 font-bold bg-gray-300">
+									<th class="" data-order="desc" id="gdContByDefault">Date </th>
+									<th class="" data-order="desc" id="gdContBycCases">Total Confirmed </th>
+									<th class="" data-order="desc" id="gdContByrCases">Total Recovered </th>
+									<th class="" data-order="desc" id="gdContByDeath">Total Deaths </th>
+									<th class="" data-order="desc" id="gdContByaCases">Active Cases </th>
+								</tr>
+							</thead>
+							<tbody id="dgValue" class="align-middle resSmall"></tbody>
+						</table>
+					</div>
+				</div>
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="dailyLData" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-blue-300">
+					<h5 class="modal-title"><p class="text-2xl font-extrabold text-gray-700">Daily Cases in India</p></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pt-2 text-xs sm:text-lg sm:px-6">
+					<!-- <i class="fa fa-search px-2" aria-hidden="true"></i>
+					<input type="text" id="myInput" placeholder="Search Country..." onkeyup="searchFun()" class="shadow border rounded-full text-gray-700 my-4 px-6 focus:shadow-outline focus:bg-blue-100 placeholder-indigo-300"> -->
+			
+					<div class="table-responsive-lg">
+						<table class="table text-center">
+							<thead class="text-white font-sans text-xs sm:text-lg">
+								<!-- <tr class="table-sm font-bold bg-gray-300 sortCss">
+									<th></th>
+									<th data-order="desc" id="sContByTcCases" class="text-red-700" style="cursor: pointer">++Confirmed </th>
+									<th></th>
+									<th data-order="desc" id="sContByTrCases" class="text-green-700" style="cursor: pointer">++Recovered</th>
+									<th data-order="desc" id="sContByTDeath" class="text-gray-700" style="cursor: pointer">++Deaths </th>	
+									<th></th>
+								</tr> -->
+								<tr class="resSmall text-gray-700 font-bold bg-gray-300">
+									<th class="" data-order="desc" id="ldContByDefault">Date </th>
+									<th class="" data-order="desc" id="ldContBycCases">Total Confirmed </th>
+									<th class="" data-order="desc" id="ldContByrCases">Total Recovered </th>
+									<th class="" data-order="desc" id="ldContByDeath">Total Deaths </th>
+									<th class="" data-order="desc" id="ldContByaCases">Active Cases </th>
+								</tr>
+							</thead>
+							<tbody id="dlValue" class="align-middle resSmall"></tbody>
+						</table>
+					</div>
+				</div>
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<!-- Daily Local Total Tests in India -->
+	<div class="modal fade" id="dailyLDataTest" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-blue-300">
+					<h5 class="modal-title"><p class="text-2xl font-extrabold text-gray-700">Daily Tests in India</p></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pt-2 text-xs sm:text-lg sm:px-6">
+					<div class="table-responsive-lg">
+						<table class="table text-center">
+							<thead class="text-white font-sans text-xs sm:text-lg">
+								<tr class="resSmall text-gray-700 font-bold bg-gray-300">
+									<th class="" data-order="desc" id="">Date </th>
+									<th class="" data-order="desc" id="">Total Tests </th>
+									<th class="" data-order="desc" id="">New Tests </th>
+									<th class="" data-order="desc" id="">Source </th>
+								</tr>
+							</thead>
+							<tbody id="dltValue" class="align-middle resSmall"></tbody>
+						</table>
+					</div>
+				</div>
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="lstNewsBrJhWb" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><p class="text-lg font-extrabold text-gray-700">
+					Recent Sources Of Bihar, Jharkhand and West Bengal</p></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pt-2 text-xs sm:text-sm sm:px-6">
+					<div class="table-responsive-lg">
+						<table class="table table-borderless table-sm text-center">
+							<thead class="text-white font-sans text-xs sm:text-sm">
+								<tr class="resSmallNews text-gray-700 font-bold">
+									<th class="">State </th>
+									<th class="">Sources </th>
+								</tr>
+							</thead>
+							<tbody id="bhJhWbNewsData" class="resSmall"></tbody>
+						</table>
+					</div>
+				</div>
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="lstNewsOthers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><p class="text-lg font-extrabold text-gray-700">
+					Recent Updates Source other than Bihar, Jharkhand and West Bengal</p></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pt-2 text-xs sm:text-sm sm:px-6">
+					<i class="fa fa-search px-2" aria-hidden="true"></i>
+					<input type="text" id="myBJWInput" placeholder="Search State..." onkeyup="searchBJWFun()" class="shadow border rounded-full text-gray-700 my-4 px-6 focus:shadow-outline focus:bg-blue-100 placeholder-indigo-300">
+					<div class="table-responsive-lg">
+						<table class="table table-borderless table-sm">
+							<thead class="text-white font-sans text-xs sm:text-sm">
+								<tr class="resSmallNews text-gray-700 font-bold">
+									<th class="">State </th>
+									<th class="">Sources </th>
+								</tr>
+							</thead>
+							<tbody id="oStateNewsData" class="resSmall"></tbody>
+						</table>
+					</div>
+				</div>
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<!-- Daily Statewise Test Data  -->
+	<div class="modal fade" id="dailyTest" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content bg-blue-300">
+				<div class="modal-header bg-blue-300">
+					<h5 class="modal-title text-center"><p id="stateHeadTest" class="text-2xl font-extrabold text-gray-700"></p></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pt-2 text-xs sm:text-lg sm:px-6">
+					<div class="table-responsive-lg">
+						<table class="table text-center">
+							<thead class="text-white font-sans text-xs sm:text-lg">
+								<tr class="resSmall text-gray-700 font-bold bg-gray-300">
+									<th class="" data-order="desc" id="">Date</th>
+									<th class="" data-order="desc" id="">Total Tests</th>
+									<th class="" data-order="desc" id="">New Tests</th>
+									<th class="" data-order="desc" id="">Positive</th>
+									<th class="" data-order="desc" id="">Positivity %</th>
+									<!-- <th class="" data-order="desc" id="">Negative</th>
+									<th class="" data-order="desc" id="">Unconfirmed</th> -->
+								</tr>
+							</thead>
+							<tbody id="stateTestDaily" class="align-middle resSmall"></tbody>
+						</table>
+					</div>
+				</div>
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+
+	
+
+
+	<div class="container pb-6">
+		<div class="pl-6 py-6">
+			<div class="bg-blue-500 text-left text-2xl font-extrabold text-white rounded-bl-full px-16 py-2 shadow-2xl" id="about">About <span></span></div>
+		</div>
+		<div class="text-md">
+			<div class="font-bold">
+				<p>Coronavirus disease (COVID-19) is an infectious disease caused by a newly discovered coronavirus.</p><br>
+				<p>Most people who fall sick with COVID-19 will experience mild to moderate symptoms and recover without special treatment.</p><br>
+				<p>The virus that causes COVID-19 is mainly transmitted through droplets generated when an infected person coughs, sneezes, or exhales. These droplets are too heavy to hang in the air, and quickly fall on floors or surfaces.</p><br>
+				<p>You can be infected by breathing in the virus if you are within close proximity of someone who has COVID-19, or by touching a contaminated surface and then your eyes, nose or mouth.</p>
+			</div>
+		</div>
+
+		<div class="pl-6 py-8">
+			<div class="bg-blue-500 text-left text-2xl font-extrabold text-white rounded-bl-full px-16 py-2 shadow-2xl" id="precautions">Precautions <span></span></div>
+		</div>
+
+		<div class="text-md">
+			<div class="font-bold">
+				Protect yourself and others around you by knowing the facts and taking appropriate precautions. Follow advice provided by your local public health agency. <br><br>
+				<p>To prevent the spread of COVID-19:</p>
+			</div>
+			<ul class="list-disc px-6">
+				<li>Clean your hands often. Use soap and water, or an alcohol-based hand rub.</li>
+				<li>Maintain a safe distance from anyone who is coughing or sneezing.</li>
+				<li>Don’t touch your eyes, nose or mouth.</li>
+				<li>Cover your nose and mouth with your bent elbow or a tissue when you cough or sneeze.</li>
+				<li>Stay home if you feel unwell.</li>
+				<li>If you have a fever, a cough, and difficulty breathing, seek medical attention. Call in advance.</li>
+				<li>Follow the directions of your local health authority.</li>
+				<li>Avoiding unneeded visits to medical facilities allows healthcare systems to operate more effectively, therefore protecting you and others.</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="container-fluid flex-row md:flex justify-between bg-gray-800 pt-6 px-6 text-white">
+		<div class="w-full px-6 pt-4">
+			<div class="flex font-bold text-xl text-gray-400">Learn more on...</div>
+			<div class="flex text-xs lg:pb-3">
+				<div class="flex-row text-xs">
+					<div class="flex sm:px-2 py-2 sm:py">
+						<a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public">
+							<div class="rounded-full bg-white text-blue-800 p-2 px-4">worldometers.info</div>
+						</a>
+					</div>
+					<div class="flex sm:px-2 py-2 sm:py">
+						<a href="https://www.covid19india.org/">
+							<div class="rounded-full bg-white text-blue-800 p-2 px-4">covid19india.org</div>
+						</a>
+					</div>
+				</div>
+				<div class="flex-row text-xs">
+					<div class="flex sm:px-2 py-2 sm:py">
+						<a href="https://www.mohfw.gov.in/">
+							<div class="rounded-full bg-white text-blue-800 p-2 px-4">mohfw.gov.in</div>
+						</a>
+					</div>
+					<div class="flex sm:px-2 py-2 sm:py">
+						<a href="https://www.worldometers.info/coronavirus/">
+							<div class="rounded-full bg-white text-blue-800 p-2 px-4">who.int</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="flex">
+				<div class="text-xs">
+					<span>Note:</span> The Data are shown in this website are may vary from other websites like MoHFW at current time beacuse they updates it's data at a scheduled time. However, this website updates data accordingly to multiple open source APiS which fetched the data from state press bulletins, official handles, PBI, Press Trust of India, ANI reports to provide most accurate data. So, these are generally more recent
+					<p>If you have any queries or suggestions please feel free to write mail on <a href="mailto:a4abhihek2015@gmail.com">a4abhishek2015@gmail.com</a> or through feedback form. <br> Thanks... </p> Abhishek Kumar Arya
+				</div>
+			</div>
+		</div>
+		<div class="w-full px-6 py-4">
+			<h2 class="font-bold text-xl text-gray-400">Your Feedback...</h2>
+			<div class="flex sm:px-4">
+				<form class="max-w-xl w-full text-gray-200 sm:px-8 md:px-0" id="contact-form">
+					<div class="flex flex-col sm:flex-row">
+						<div class="flex flex-col">
+							<label for="first_name" class="sr-only">First name</label>
+							<input class="bg-gray-700 mt-4 md:mx-2 border border-gray-600 rounded-lg py-2 px-4 w-full" name="Firstname" type="text" placeholder="First name" id="first_name" required>
+							<label for="last_name" class="sr-only">Last name</label>
+							<input class="bg-gray-700 mt-4 md:mx-2 border border-gray-600 rounded-lg py-2 px-4 w-full" name="Lastname" type="text" placeholder="Last name" id="last_name">
+							<label for="email" class="sr-only">Your email</label>
+							<input class="bg-gray-700 mt-4 md:mx-2 border border-gray-600 rounded-lg py-2 px-4 w-full" name="Email" type="email" placeholder="yourmail@email.com" id="email" required>
+						</div>
+						<div class="flex sm:pl-4">
+							<label for="message" class="sr-only">Your Message</label>
+							<textarea rows="4" cols="30" name="message" placeholder="Message" class="bg-gray-700 mt-4 md:mx-2 border border-gray-600 rounded-lg py-2 px-4 py-0 w-full" id="message"></textarea>
+						</div>
+					</div>
+					<div class="flex-row md:-mx-2">
+						<button class="text-sm mt-4 rounded-lg py-2 px-4 block w-full transition duration-500 ease-in-out bg-blue-800 hover:bg-blue-600 transform hover:scale-110" onclick="sendMessage()">Submit</button>
+						<div class="pt-1 text-xs text-red-500">Submit button is disabled due to some database issue in Firebase<br>
+						If you have any Queries or Feedback Please drop me mail at <a href="mailto:a4abhihek2015@gmail.com">a4abhishek2015@gmail.com</a><br>Thanks</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="bg-gray-800 text-white px-4" id="footer">
+		<div class="text-right pb-2 text-4xl"><a href="#" class="hover:text-red-600"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i></a></div>
+	</div>
+	<script src="sWiseData.js?<?php echo date('l jS \of F Y h:i:s A'); ?>"></script>
+	<script src="sorting.js?<?php echo date('l jS \of F Y h:i:s A'); ?>"></script>
+	<script src="mainNoti.js?<?php echo date('l jS \of F Y h:i:s A'); ?>"></script>
+
+</body>
+
+</html>

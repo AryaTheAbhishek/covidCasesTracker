@@ -1,0 +1,21 @@
+{
+	"name" : "Covid-19 Tracker",
+	"short_name" : "covid",
+	"version": "1.0.0",
+	"start_url" : "/",
+	"display" : "standalone",
+	"backgroung_color" : "#fff",
+	"description" : "Displays realtime Covid-19 Cases",
+	"icons" : [
+		{
+			"src": "cva.png",
+		    "sizes": "512x512",
+		    "type": "image/png"
+		},
+		{
+			"src" : "cvb.png",
+			"sizes" : "192x192",
+			"type" : "image/png"
+		}
+	]
+}
